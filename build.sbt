@@ -5,6 +5,7 @@ import CopyLogback._
 import Dependencies._
 import VersionFile._
 import sbt._
+import com.typesafe.sbt.SbtScalariform._
 
 // Root project
 
@@ -17,6 +18,7 @@ lazy val root = Project("gatling-parent", file("."))
   .settings(libraryDependencies ++= docDependencies)
   .settings(updateOptions := updateOptions.value.withGigahorse(false))
   .settings(unmanagedSourceDirectories in Test := ((sourceDirectory in Sphinx).value ** "code").get)
+  .settings(ScalariformKeys.autoformat := false)
 
 // Modules
 
@@ -24,6 +26,7 @@ def gatlingModule(id: String) = Project(id, file(id))
   .enablePlugins(AutomateHeaderPlugin, SonatypeReleasePlugin)
   .settings(gatlingModuleSettings: _*)
   .settings(updateOptions := updateOptions.value.withGigahorse(false))
+  .settings(ScalariformKeys.autoformat := false)
 
 lazy val nettyUtil = gatlingModule("gatling-netty-util")
   .settings(libraryDependencies ++= nettyUtilDependencies)
